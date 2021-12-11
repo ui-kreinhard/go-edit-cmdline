@@ -18,3 +18,7 @@ export target="/tmp/cmdline2.txt"
 # change fsck.repair to no, remove rw, add ro add non existing ip parameter with dhcp
 go run main.go +fsck.repair=no -rw +ro +ip=dhcp
 ```
+
+
+## State
+I've just coded it in 2h and just tested it. Use with caution :)
