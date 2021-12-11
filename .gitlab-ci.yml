@@ -1,0 +1,38 @@
+image: ${image}
+
+variables:
+  BIN_NAME: go-edit-cmdline
+  ARTIFACTS_DIR: artifacts
+  GO_PROJECT: gitlab.contargo.net/util/go-edit-cmdline
+
+stages:
+  - build
+  - test
+
+before_script:
+  - mkdir -p ${GOPATH}/src/${GO_PROJECT}
+  - mkdir -p ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}
+  - cp -r ${CI_PROJECT_DIR}/* ${GOPATH}/src/${GO_PROJECT}/
+  - cd ${GOPATH}/src/${GO_PROJECT}
+
+build-go-edit-cmdline:
+  stage: build
+  script:
+    - go build -o ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/${BIN_NAME} 
+  artifacts:
+    paths:
+      - ${ARTIFACTS_DIR}
+
+build-go-edit-cmdline-arm:
+  stage: build
+  script:
+    - env GOOS=linux GOARCH=arm GOARM=5 go build -o ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/${BIN_NAME} 
+  artifacts:
+    paths:
+      - ${ARTIFACTS_DIR}
+
+
+test-go-edit-cmdline:
+  stage: test
+  script:
+    - go test -v -cover ./...
