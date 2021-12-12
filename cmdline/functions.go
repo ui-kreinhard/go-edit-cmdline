@@ -36,7 +36,7 @@ func CreateFlagOrValuePair(rawString string) Content {
 	} else {
 		return &Value{
 			elements[0],
-			elements[1],
+			strings.Join(elements[1:], "="),
 		}
 	}
 }
